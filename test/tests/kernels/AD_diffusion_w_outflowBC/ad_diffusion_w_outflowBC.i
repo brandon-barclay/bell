@@ -1,8 +1,8 @@
 [Mesh]
   type = GeneratedMesh
   dim = 2
-  nx = 200
-  ny = 200
+  nx = 100
+  ny = 100
   xmax = 1500
   ymax = 1500
 []
@@ -23,30 +23,29 @@
 []
 
 [Kernels]
-  [time_derivative]
-    type = MassLumpedTimeDerivative
-    variable = concentration
-  []
+  #[time_derivative]
+  #  type = ADTimeDerivative
+  #  variable = concentration
+  #[]
   [diffusion]
-    type = ConservativeAdvection
+    type = ADBellDiffusion
     variable = concentration
-    upwinding_type = full
-    velocity = '22 0 0'
+    diffusivity = 1
   []
 []
 
 [BCs]
   [all]
     type = BellMassOutflowBC
-    boundary = 'top right'
-    variable = concentration 
+    variable = concentration
+    boundary = 'left right top bottom'
   []
 []
 
 [Materials]
   [idk]
     type = Air
-    velocity = '22 0 0'
+    velocity = '0.000000001 0.000000001 0'
   []
   [radioactive_material]
     type = ADGenericConstantMaterial
@@ -60,12 +59,10 @@
 []
 
 [Executioner]
-  type = Transient
-  num_steps = 70
+  type = Steady
   solve_type = NEWTON
   petsc_options_iname = '-pc_type'
   petsc_options_value =  'hypre'
-  l_tol = 1E-14
 []
 
 [Outputs]

@@ -1,0 +1,7 @@
+[Tests]
+  [test]
+    type = 'Exodiff'
+    input = 'ad_diffusion_w_outflowBC.i'
+    exodiff = 'ad_diffusion_w_outflowBC_out.e'
+  []
+[]
